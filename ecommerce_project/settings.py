@@ -31,7 +31,7 @@ import os
 
 SECRET_KEY = os.getenv('0uj32db09vzp1*)0%5p!-^$7+s1!brlq=c8$%9!mx76wzrs9dw', "fallback_dev_secret")
 DEBUG = False
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['https://django-ai-recommender.onrender.com','localhost', '127.0.0.1']
 OPENAI_KEY = os.getenv('f13475e162d497028d02fa625d63e')
 MONGO_URI = os.getenv('3994afb61d4932cb9c71b24ba9166aec')
 
