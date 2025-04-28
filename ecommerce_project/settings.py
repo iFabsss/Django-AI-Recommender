@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import os
 
 SECRET_KEY = os.getenv('SECRET_KEY', "fallback_dev_secret")
-DEBUG = False
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = ['django-ai-recommender.onrender.com', 'localhost', '127.0.0.1']
 OPENAI_KEY = os.getenv('OPENAI_KEY')
 MONGO_URI = os.getenv('MONGO_URI')
