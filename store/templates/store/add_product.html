@@ -2,6 +2,114 @@
 <html>
     <head>
         <title>Add Product</title>
+        <style>
+            /* styles.css */
+
+            /* General reset for margin and padding */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            /* Body Styling */
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f9;
+                color: #333;
+                padding: 20px;
+            }
+
+            /* Page Title */
+            h1 {
+                text-align: center;
+                color: #4CAF50;
+                margin-bottom: 30px;
+            }
+
+            /* Form Styling */
+            form {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            form p {
+                margin-bottom: 20px;
+            }
+
+            /* Label and Input Fields */
+            label {
+                font-size: 1.1em;
+                margin-bottom: 5px;
+                display: block;
+            }
+
+            input[type="text"],
+            input[type="number"],
+            input[type="file"],
+            textarea {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 20px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 1em;
+            }
+
+            button[type="submit"] {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                font-size: 1.2em;
+                border-radius: 5px;
+                cursor: pointer;
+                width: 100%;
+            }
+
+            button[type="submit"]:hover {
+                background-color: #45a049;
+            }
+
+            /* Link Styling */
+            a {
+                display: inline-block;
+                margin-top: 20px;
+                text-align: center;
+                color: #4CAF50;
+                text-decoration: none;
+                font-size: 1.1em;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+            /* Generate Tags Button Styling */
+            #autogenerate-tags {
+                background-color: #007bff;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                font-size: 1.1em;
+                border-radius: 5px;
+                cursor: pointer;
+                width: 100%;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+
+            #autogenerate-tags:hover {
+                background-color: #0056b3;
+            }
+
+            
+
+        </style>
     </head>
 
     <body>
@@ -9,8 +117,39 @@
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
+            <button type="button" id="autogenerate-tags" onclick="generateTags()"> Generate Tags </button>
             <button type="submit">Add Product</button>
         </form>
         <a href="{% url 'product_list' %}">Back to Product List</a>
     </body>
+    <script>
+        function generateTags() {
+            const name = document.querySelector("input[name='name']").value;
+            const description = document.querySelector("textarea[name='description']").value;
+            const category = document.querySelector("input[name='category']").value;
+            console.log("Generating tags for:", name, description, category);
+
+            fetch("{% url 'generate_tags' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({
+                    name: name,
+                    description: description,
+                    category: category
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector("input[name='tags']").value = data.tags;
+                console.log("Tags generated:", data.tags);
+            })
+            .catch(error => {
+                console.error("Error generating tags:", error);
+            });
+        }
+    </script>
+
 </html>

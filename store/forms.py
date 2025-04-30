@@ -5,3 +5,5 @@ class ProductForm(forms.Form):
     description = forms.CharField(widget=forms.Textarea)
     price = forms.FloatField()
     category = forms.CharField(max_length=50)
+    tags = forms.CharField(max_length=1000, required=False)  # Optional field for tags
+    

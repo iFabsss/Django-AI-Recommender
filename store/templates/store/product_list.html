@@ -1,32 +1,155 @@
+{% load static %}
+
+
 <!DOCTYPE html>
 <html>
     <head>
         <title>AI Recommender Ecommerce</title>
+        
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f8f9fa;
+                margin: 30px;
+            }
+
+            #main-container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            h1,
+            h2 {
+                color: #343a40;
+            }
+
+            a {
+                text-decoration: none;
+                color: #007bff;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+            ul {
+                list-style: none;
+                padding-left: 0;
+            }
+
+            li {
+                background-color: #fff;
+                padding: 10px 15px;
+                margin: 10px 0;
+                border: 1px solid #dee2e6;
+                border-radius: 6px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+
+            .tags {
+                margin-top: 5px;
+                font-size: 0.9em;
+            }
+
+            .tags a {
+                margin-right: 6px;
+                background-color: #e9ecef;
+                padding: 3px 8px;
+                border-radius: 12px;
+                font-size: 0.85em;
+                color: #495057;
+            }
+
+            a[href="{% url 'add_product' %}"] {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 0px;
+                font-size: 1.2em;
+                cursor: pointer;
+                width: 100%;
+                text-align: center;
+                display: inline-block;
+                border-radius: 5px;
+            }
+
+            a[href="{% url 'add_product' %}"]:hover {
+                background-color: #218838;
+            }
+        </style>
+        
     </head>
 
     <body>
-        <h1>Product List</h1>
-        <ul>
-            {% for product in products %}
-                <li>{{ product.name }} - ${{ product.price }}</li>
-            {% endfor %}
-        </ul>
+        <div id="main-container">
+            <h1>
+                Product List
+                {% if tag %}
+                    (Filtered by tag: {{ tag }})
+                {% endif %}
+            </h1>
+            <ul>
+                {% for product in products %}
+                    <li>{{ product.name }} - ${{ product.price }}</li>
+                    {% if product.tags  %}
+                        <div class="tags">
+                            <strong>Tags:</strong>
+                            {% for tag in product.tags %}
+                                <a href="{% url 'product_list_by_tag' tag|slugify %}?name={{ tag }}">{{ tag }}</a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <br>
+                {% endfor %}
+            </ul>
 
-        <h2>All Products</h2>
-        <ul>
-            {% for product in products %}
-                <li>{{ product.name }} - ${{ product.price }}</li>
-            {% endfor %}
-        </ul>
-        <a href="{% url 'add_product' %}">Add New Product</a>
+            <h2>
+                All Products
+                {% if tag %}
+                    (Filtered by tag: {{ tag }})
+                {% endif %}
+            </h2>
+            <ul>
+                {% for product in products %}
+                    <li>{{ product.name }} - ${{ product.price }}</li>
+                    {% if product.tags  %}
+                        <div class="tags">
+                            <strong>Tags:</strong>
+                            {% for tag in product.tags %}
+                                <a href="{% url 'product_list_by_tag' tag|slugify %}?name={{ tag }}">{{ tag }}</a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <br>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'add_product' %}">Add New Product</a>
 
-        <h2>Recommended Products</h2>
-
-        <ul>
-            {% for product in recommendations %}
-                <li>{{ product.name }} - ${{ product.price }}</li>
-            {% endfor %}
-        </ul>
+            <h2>
+                Recommended Products
+                {% if tag %}
+                    with tag: {{ tag }}
+                {% endif %}
+            </h2>
+            <ul>
+                {% for product in recommendations %}
+                    <li>{{ product.name }} - ${{ product.price }}</li>
+                    {% if product.tags  %}
+                        <div class="tags">
+                            <strong>Tags:</strong>
+                            {% for tag in product.tags %}
+                                <a href="{% url 'product_list_by_tag' tag|slugify %}?name={{ tag }}">{{ tag }}</a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <br>
+                {% endfor %}
+            </ul>
+        </div>
     </body>
 
 </html>

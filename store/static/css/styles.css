@@ -1,0 +1,69 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 30px;
+}
+
+#main-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1,
+h2 {
+    color: #343a40;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    background-color: #fff;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.tags {
+    margin-top: 5px;
+    font-size: 0.9em;
+}
+
+.tags a {
+    margin-right: 6px;
+    background-color: #e9ecef;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    color: #495057;
+}
+
+a[href="{% url 'add_product' %}"] {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+}
+
+a[href="{% url 'add_product' %}"]:hover {
+    background-color: #218838;
+}
