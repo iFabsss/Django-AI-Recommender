@@ -71,31 +71,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecommerce_project.wsgi.application'
 
-
-'''DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'ecommerce_db',
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': 'mongodb+srv://mafguarin:KQJg6FrrPicmkuNZ@cluster0.ic8cp65.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
-        },
-    }
-}'''
-
 from pymongo import MongoClient
 
 # Your MongoDB client and connection string
 MONGODB_DATABASES = {
     "default": {
         "name": "ecommerce_db",  # The database name
-        "host": "mongodb+srv://mafguarin:KQJg6FrrPicmkuNZ@cluster0.ic8cp65.mongodb.net/?retryWrites=true&w=majority",  # MongoDB URI
+        "host": MONGO_URI,  # MongoDB URI
         "tz_aware": True,  # Timezone-aware settings if you need to use timezone support
     },
 }
 
 # Now you can also initialize the MongoDB client like you did before if needed elsewhere
-client = MongoClient('mongodb+srv://mafguarin:KQJg6FrrPicmkuNZ@cluster0.ic8cp65.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+client = MongoClient(MONGO_URI)
 
 
 
